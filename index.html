@@ -2,14 +2,860 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <!-- Mixpanel Platform -->
+    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
-    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <!-- Font Awesome  -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- Utilities Platform -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Base64/0.3.0/base64.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/1.1.1/js/md5.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <style type="text/css">
+    /* Transformicons
+    */
+    font-face {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 300;
+      src: local("Source Sans Pro Light"), local("SourceSansPro-Light"), url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v6/toadOcfmlt9b38dHJxOBGNbE_oMaV8t2eFeISPpzbdE.woff) format("woff");
+    }
+
+    @font-face {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 400;
+      src: local("Source Sans Pro"), local("SourceSansPro-Regular"), url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v6/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format("woff");
+    }
+
+    @font-face {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 600;
+      src: local("Source Sans Pro Semibold"), local("SourceSansPro-Semibold"), url(http://themes.googleusercontent.com/static/fonts/sourcesanspro/v6/toadOcfmlt9b38dHJxOBGJ6-ys_j0H4QL65VLqzI3wI.woff) format("woff");
+    }
+
+    .buttons-container {
+      margin: 100px auto;
+      text-align: center;
+    }
+
+    button {
+      display: inline-block;
+      margin: 0 1em;
+      border: none;
+      background: none;
+    }
+
+    button span {
+      display: block;
+    }
+
+    .grid-button {
+      padding: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .grid-button .grid {
+      width: 1rem;
+      height: 1rem;
+      background: #ecf0f1;
+      color: #ecf0f1;
+      /* Not in use when the colors are specified below */
+      transition: 0.3s;
+    }
+
+    .grid-button.open .grid {
+      -webkit-transform: rotate3d(0, 0, 1, -45deg) scale3d(0.8, 0.8, 0.8);
+      transform: rotate3d(0, 0, 1, -45deg) scale3d(0.8, 0.8, 0.8);
+    }
+
+    .grid-button.rearrange .grid {
+      box-shadow: -1.25rem -1.25rem, 0 -1.25rem, 1.25rem -1.25rem, -1.25rem 0, 1.25rem 0, -1.25rem 1.25rem, 0 1.25rem, 1.25rem 1.25rem;
+    }
+
+    .grid-button.rearrange.open .grid {
+      box-shadow: 0 -1rem, 0 -2rem, 1rem 0, -2rem 0, 2rem 0, -1rem 0, 0 2rem, 0 1rem;
+    }
+
+    .grid-button.collapse .grid {
+      box-shadow: -1.25rem 0, -1.25rem 1.25rem, 1.25rem 0, 1.25rem -1.25rem, 0 -1.25rem, -1.25rem -1.25rem, 0 1.25rem, 1.25rem 1.25rem;
+    }
+
+    .grid-button.collapse.open .grid {
+      box-shadow: -1rem 0, 0 0 transparent, 1rem 0, 0 0 transparent, 0 -1rem, 0 0 transparent, 0 1rem, 0 0 transparent;
+    }
+
+    /* ====================== lines button ==================================================*/
+    .lines-button {
+      padding: 2rem 1rem;
+      transition: .3s;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 0.57143rem;
+      /* */
+    }
+    .lines-button:hover {
+      opacity: 1;
+    }
+    .lines-button:active {
+      transition: 0;
+    }
+
+    .lines {
+      display: inline-block;
+      width: 4rem;
+      height: 0.57143rem;
+      background: #FFFFFF;
+      border-radius: 0.28571rem;
+      transition: 0.3s;
+      position: relative;
+    }
+    .lines:before, .lines:after {
+      display: inline-block;
+      width: 4rem;
+      height: 0.57143rem;
+      background: #FFFFFF;
+      border-radius: 0.28571rem;
+      transition: 0.3s;
+      position: absolute;
+      left: 0;
+      content: '';
+      -webkit-transform-origin: 0.28571rem center;
+      transform-origin: 0.28571rem center;
+    }
+    .lines:before {
+      top: 1rem;
+    }
+    .lines:after {
+      top: -1rem;
+    }
+
+    .lines-button:hover .lines:before {
+      top: 1.14286rem;
+    }
+    .lines-button:hover .lines:after {
+      top: -1.14286rem;
+    }
+
+    .lines-button.open {
+      -webkit-transform: scale3d(0.8, 0.8, 0.8);
+      transform: scale3d(0.8, 0.8, 0.8);
+    }
+
+    .lines-button.arrow.open .lines:before, .lines-button.arrow.open .lines:after {
+      top: 0;
+      width: 2.22222rem;
+    }
+    .lines-button.arrow.open .lines:before {
+      -webkit-transform: rotate3d(0, 0, 1, 40deg);
+      transform: rotate3d(0, 0, 1, 40deg);
+    }
+    .lines-button.arrow.open .lines:after {
+      -webkit-transform: rotate3d(0, 0, 1, -40deg);
+      transform: rotate3d(0, 0, 1, -40deg);
+    }
+
+    .lines-button.arrow-up.open {
+      -webkit-transform: scale3d(0.8, 0.8, 0.8) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(0.8, 0.8, 0.8) rotate3d(0, 0, 1, 90deg);
+    }
+
+    /*!
+     * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+     * Code licensed under the Apache License v2.0.
+     * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+     */
+
+    /* Toggle Styles */
+
+    #wrapper {
+        padding-left: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+    #sidebar-wrapper {
+        z-index: 1000;
+        position: fixed;
+        left: 250px;
+        width: 0;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+        background: #000;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #page-content-wrapper {
+        width: 100%;
+        position: absolute;
+        padding: 15px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: absolute;
+        margin-right: -250px;
+    }
+
+    /* Sidebar Styles */
+
+    .sidebar-nav {
+        position: absolute;
+        top: 0;
+        width: 250px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 40px;
+    }
+
+    .sidebar-nav li a {
+        display: block;
+        text-decoration: none;
+        color: #999999;
+    }
+
+    .sidebar-nav li a:hover {
+        text-decoration: none;
+        color: #fff;
+        background: rgba(255,255,255,0.2);
+    }
+
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus {
+        text-decoration: none;
+    }
+
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        font-size: 18px;
+        line-height: 60px;
+    }
+
+    .sidebar-nav > .sidebar-brand a {
+        color: #999999;
+    }
+
+    .sidebar-nav > .sidebar-brand a:hover {
+        color: #fff;
+        background: none;
+    }
+
+    @media(min-width:768px) {
+        #wrapper {
+            padding-left: 250px;
+        }
+
+        #wrapper.toggled {
+            padding-left: 0;
+        }
+
+        #sidebar-wrapper {
+            width: 250px;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            width: 0;
+        }
+
+        #page-content-wrapper {
+            padding: 20px;
+            position: relative;
+        }
+
+        #wrapper.toggled #page-content-wrapper {
+            position: relative;
+            margin-right: 0;
+        }
+    }
+    /* Our CSS
+    */
+    .event-trigger {
+      display:inline;
+      margin:0 0 0 10px;
+    }
+
+    .icon.string {
+        background-position: 0 0px;
+        width:16px;
+    }
+
+
+    .icon.boolean {
+        background-position: 0 -30px;
+        width:16px;
+    }
+
+    .hover.boolean {
+        background-position: -16px -30px;
+        width:16px;
+    }
+
+    .icon.date {
+        background-position: 0 -60px;
+        width:16px;
+    }
+
+    .hover.date {
+        background-position: -16px -60px;
+        width:16px;
+    }
+
+    .icon.list {
+        background-position: 0 -45px;
+        width:16px;
+    }
+    .icon.numeric {
+       background-position: 0 -15px;
+       width:16px;
+    }
+
+    .hover.numeric {
+       background-position: -16px -15px;
+       width:16px;
+    }
+    .hover.list {
+        background-position: -16px -45px;
+        width:16px;
+    }
+
+    .icon {
+        background: url(https://cdn.mxpnl.com/cache/86e7a9704481d99cba363aa05a2e32d4/images/widgets/property_filter/property_filter_icons.png);
+        width: 16px;
+        height: 15px;
+        /*float: left;*/
+        line-height: 24px;
+        margin: 8px 7px 7px 8px;
+    }
+
+    .panel-group {
+      width:700px;
+      margin-top:20px;
+    }
+
+    .property {
+      display:block;
+      height:20px;
+    }
+
+    .property-name, .property-type, .property-definition {
+      display:inline-block;
+      margin: 0 0 -4px 5px;
+    }
+
+    .property-name {
+      font-weight: 800;
+      width:160px;
+    }
+
+    .property-type {
+      width:80px;
+    }
+
+    .property-definition {
+      margin: 0 0 0 10px;
+    }
+
+    </style>
+
   </head>
-  <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
-    <script>
-      // Run queries and display results here
+
+  <body class="mixpanel-platform-body spec">
+    <div id="wrapper" class="toggled"
+       <!-- Page Content -->
+       <div id="page-content-wrapper">
+           <div class="container-fluid">
+               <div class="row">
+                   <div class="col-lg-12">
+                     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fileModal">
+                       Import / Export Spec
+                     </button>
+                     <div class="dropdown">
+                       <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Dropdown trigger
+                         <span class="caret"></span>
+                       </button>
+                       <ul class="dropdown-menu" aria-labelledby="dLabel">
+                       </ul>
+                     </div>
+                     <div class="panel-group" id="accordion">
+                     </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <!-- /#page-content-wrapper -->
+
+   </div>
+   <script>
+   $(".lines-button").click(function(e) {
+       e.preventDefault();
+       $(this).toggleClass("open");
+       $("#wrapper").toggleClass("toggled");
+   });
+   </script>
+  <!-- Upload Modal -->
+  <div class="modal fade" id="fileModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Welcome to spec checker</h4>
+        </div>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Upload a file</h4>
+        </div>
+        <div class="modal-body">
+          <div class='csvUpload'>
+            <input style="opacity:0" id="uploadFile" placeholder="Choose File" disabled="disabled" class="" />
+              <span>Upload CSV</span>
+              <input id="uploadBtn" type="file" class="upload" placeholder="Upload File" />
+          </div>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <script type="text/javascript">
+
+  /*
+  **  Debug issues
+  **  To-Do
+  **    Sample Specs per vertical
+  */
+  //! JSD Validator v1.6 | (c) 2013 Build-Software | 2013-05-20 | Released under the FreeBSD license
+    function JSDValidator(e){this.Error=null;this.SetSchema=function(e){v=e};this.Validate=function(e){if(typeof JSON!=="object")return h("JSON is undefined. Did you forget to include json2.js?");if(!m)return h(d.Error);d.Error=null;return t(e,v)};this.ValidateSchema=function(e){m=false;if(e==undefined)e=v;if(e==undefined)return h("No JSD Schema defined");d.Error=null;m=c(e);return m};var t=function(e,t,c){if(t==undefined)t=v;if(t==undefined)return h("No JSD Schema defined");var d=e!==undefined;if(t.Condition instanceof Function){if(d){if(!t.Condition(e,c))return p("errConditionNotMet",t,e)}else if(t.Condition(e,c)&&!t.Optional)return p("errUnfoundNonOptional",t,e)}else{if(!t.Optional&&!d)return p("errUnfoundNonOptional",t,e)}if(d){if(e==null){if(!t.CanBeNull)return p("errCantBeNull",t,e);return true}var m=false;if(t.Type){switch(t.Type){case"String":m=n(e,t);break;case"Number":m=r(e,t);break;case"Boolean":m=i(e,t);break;case"Date":m=s(e,t);break;case"Array":m=o(e,t);break;case"Object":m=u(e,t);break;case"RegExp":m=a(e,t);break;case"Function":m=f(e,t);break;case"MultiType":m=l(e,t);break}if(!m)return false}if(t.Validate&&!t.Validate(e,c))return p("errValidate",t,e);}return true};var n=function(e,t){if(typeof e!="string")return p("errWrongType",t,e);if(t.MinLength!=undefined&&e.length<t.MinLength)return p("errMinLength",t,e);if(t.MaxLength!=undefined&&e.length>t.MaxLength)return p("errMaxLength",t,e);if(t.RegExp&&!t.RegExp.test(e))return p("errRegExp",t,e);if(t.Values){var n=false;for(var r=0;r<t.Values.length;r++){if(e==t.Values[r]){n=true;break}}if(!n)return p("errNoMatchedValue",t,e)}if(t.NotValues){for(var r=0;r<t.NotValues.length;r++){if(e==t.NotValues[r])return p("errMatchedNotValue",t,e)}}return true};var r=function(e,t){if(typeof e!="number")return p("errWrongType",t,e);if(t.Max!=undefined&&e>t.Max)return p("errMax",t,e);if(t.Min!=undefined&&e<t.Min)return p("errMin",t,e);if(t.Unsigned&&e<0)return p("errSigned",t,e);if(t.Integer&&e%Math.floor(e)>0)return p("errInteger",t,e);if(t.Values){var n=false;for(var r=0;r<t.Values.length;r++){if(e==t.Values[r]){n=true;break}}if(!n)return p("errNoMatchedValue",t,string)}if(t.NotValues){for(var r=0;r<t.NotValues.length;r++){if(e==t.NotValues[r])return p("errMatchedNotValue",t,string)}}return true};var i=function(e,t){if(typeof e!="boolean")return p("errWrongType",t,e);if(t.Values){var n=false;for(var r=0;r<t.Values.length;r++){if(e==t.Values[r]){n=true;break}}if(!n)return p("errNoMatchedValue",t,string)}if(t.NotValues){for(var r=0;r<t.NotValues.length;r++){if(e==t.NotValues[r])return p("errMatchedNotValue",t,string)}}return true};var s=function(e,t){if(!(e instanceof Date))return p("errWrongType",t,e);if(t.MinDate!=undefined&&e<t.MinDate)return p("errMinDate",t,e);if(t.MaxDate!=undefined&&e>t.MaxDate)return p("errMaxDate",t,e);if(t.Values){var n=false;for(var r=0;r<t.Values.length;r++){if(e==t.Values[r]){n=true;break}}if(!n)return p("errNoMatchedValue",t,e)}if(t.NotValues){for(var r=0;r<t.NotValues.length;r++){if(e==t.NotValues[r])return p("errMatchedNotValue",t,e)}}return true};var o=function(e,n){if(!(e instanceof Array))return p("errWrongType",n,e);if(n.MinSize!=undefined&&e.length<n.MinSize)return p("errMinSize",n,e);if(n.MaxSize!=undefined&&e.length>n.MaxSize)return p("errMaxSize",n,e);if(n.Values){for(var r=0;r<e.length;r++){var i=e[r];var s=false;for(var o=0;o<n.Values.length;o++){var u=n.Values[o];if(t(i,u)){s=true;break}else if(n.Values.length===1){return false}}if(!s)return p("errNoMatchedValue",n,e)}}if(n.NotValues){for(var r=0;r<e.length;r++){var i=e[r];for(var o=0;o<n.NotValues.length;o++){var u=n.NotValues[o];if(t(i,u)){d.Error=null;return p("errMatchedNotValue",n,e)}}}d.Error=null}return true};var u=function(e,n){if(!(e instanceof Object))return p("errWrongType",n,e);if(n.Attributes){for(var r=0;r<n.Attributes.length;r++){var i=n.Attributes[r];if(!t(e[i.Name],i,e))return false}}if(!n.CanHaveCustomAttributes){for(var s in e){if(!e.hasOwnProperty(s))continue;var o=false;if(n.Attributes){for(var r=0;r<n.Attributes.length;r++){var i=n.Attributes[r];if(s==i.Name){o=true;break}}}if(!o)return p("errCustomAttribute",n,e,{key:s})}}return true};var a=function(e,t){if(!(e instanceof RegExp))return p("errWrongType",t,e);if(t.Values){var n=false;for(var r=0;r<t.Values.length;r++){if(e==t.Values[r]){n=true;break}}if(!n)return p("errNoMatchedValue",t,e)}if(t.NotValues){for(var r=0;r<t.NotValues.length;r++){if(e==t.NotValues[r])return p("errMatchedNotValue",t,e)}}return true};var f=function(e,t){if(!(e instanceof Function))return p("errWrongType",t,e);return true};var l=function(e,n){var r=false;for(var i=0;i<n.Types.length;i++){if(t(e,n.Types[i])){r=true;break}}d.Error=false;if(!r)return p("errMultiType",n,e);return true};var c=function(e){var t={Type:"Object",Attributes:[{Name:"Type",Type:"String",Values:["String","Number","Boolean","Date","Array","Object","Boolean","Function","MultiType"]},{Name:"CanBeNull",Type:"Boolean",Optional:true},{Name:"Values",Type:"Array",Optional:true},{Name:"NotValues",Type:"Array",Optional:true},{Name:"Validate",Type:"Function",Optional:true},{Name:"Condition",Type:"Function",Optional:true},{Name:"MaxSize",Type:"Number",Optional:true,Integer:true,Condition:function(e,t){return t.Type=="Array"}},{Name:"MinSize",Type:"Number",Optional:true,Integer:true,Condition:function(e,t){return t.Type=="Array"}},{Name:"MaxLength",Type:"Number",Optional:true,Integer:true,Condition:function(e,t){return t.Type=="String"}},{Name:"MinLength",Type:"Number",Optional:true,Integer:true,Condition:function(e,t){return t.Type=="String"}},{Name:"RegExp",Type:"RegExp",Optional:true,Condition:function(e,t){return t.Type=="String"}},{Name:"Min",Type:"Number",Optional:true,Condition:function(e,t){return t.Type=="Number"}},{Name:"Max",Type:"Number",Optional:true,Condition:function(e,t){return t.Type=="Number"}},{Name:"Unsigned",Type:"Boolean",Optional:true,Condition:function(e,t){return t.Type=="Number"}},{Name:"Integer",Type:"Boolean",Optional:true,Condition:function(e,t){return t.Type=="Number"}},{Name:"MinDate",Type:"Date",Optional:true,Condition:function(e,t){return t.Type=="Date"}},{Name:"MaxDate",Type:"Date",Optional:true,Condition:function(e,t){return t.Type=="Date"}},{Name:"Types",Type:"Array",Optional:true,Values:"Object",Condition:function(e,t){return t.Type=="MultiType"}},{Name:"Attributes",Type:"Array",Optional:true,Condition:function(e,t){return t.Type=="Object"}},{Name:"CanHaveCustomAttributes",Type:"Boolean",Optional:true,Condition:function(e,t){return t.Type=="Object"}}],CanHaveCustomAttributes:false};if(typeof JSON!=="object")return h("JSON is undefined. Did you forget to include json2.js?");jsd=new JSDValidator({Schema:t});var n=jsd.Validate(e);if(n)return true;return h(jsd.Error)};var h=function(e){if(!d.Error)d.Error=e;return false};var p=function(e,t,n,r){if(t[e]!==undefined&&typeof t[e]=="string")return h(t[e]);var i;try{i=JSON.stringify(n,undefined,2)}catch(s){if(s.type=="circular_structure")i="circulared object"}switch(e){case"errWrongType":return h(typeof n+" is not a "+t.Type+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errNoMatchedValue":return h(typeof n+" does not match any of the given values ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMatchedNotValue":return h(typeof n+" matches one of the NotValues ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errConditionNotMet":return h("Condition did not get met on "+typeof n+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errUnfoundNonOptional":return h(typeof n+" not found while not optional ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errCantBeNull":return h("Object can't be null ["+(t.Name?t.Name+": ":"")+""+i+"]");case"errValidate":return h(typeof n+" did not pass the Validate function ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMinLength":return h("String is smaller than MinLength "+t.MinLength+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMaxLength":return h("String is greater than MaxLength "+t.MaxLength+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errRegExp":return h("String does not validate with RegExp "+t.RegExp.toString()+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMax":return h("Number is bigger than Max "+t.Max+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMin":return h("Number is smaller than Min "+t.Min+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errSigned":return h("Number is Signed ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errInteger":return h("Number is not an Integer ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMinDate":return h("Date is sooner than MinDate "+t.MinDate+" ["+(t.Name?t.Name+": ":"")+""+n.toString()+"]");case"errMaxDate":return h("Date is later than MaxDate "+t.MaxDate+" ["+(t.Name?t.Name+": ":"")+""+n.toString()+"]");case"errMinSize":return h("Array is smaller than MinSize "+t.MinSize+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMaxSize":return h("Array is bigger than MaxSize "+t.MaxSize+" ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errCustomAttribute":return h("Attribute '"+r.key+"' is a custom attribute, while the schema does not have 'CanHaveCustomAttributes' set to true ["+(t.Name?t.Name+": ":"")+"'"+i+"']");case"errMultiType":return h(typeof n+" did not validate on any type of the multi types ["+(t.Name?t.Name+": ":"")+"'"+i+"']")}return h("Object did not validate ["+(t.Name?t.Name+": ":"")+"'"+n.toString()+"']")};var d=this;var v=undefined;var m=true;if(e!=undefined){if(e.Schema)v=e.Schema;if(e.ValidateSchema){m=c(v)}}return true}function JSD(){}JSD.Link=function(e,t){function n(e){if(e==null||typeof e!="object")return e;var t=e.constructor();for(var r in e)t[r]=n(e[r]);return t}var r=n(e);for(var i in t){if(!t.hasOwnProperty(i))continue;r[i]=t[i]}return r}
+      
+      getQueryParam = function(param) {
+          param = param.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regexS = "[\\?&]" + param + "=([^&#]*)",
+              regex = new RegExp( regexS ),
+              results = regex.exec(document.URL);
+          if (results === null || (results && typeof(results[1]) !== 'string' && results[1].length)) {
+              return '';
+          } else {
+              return decodeURIComponent(results[1]).replace(/\+/g, ' ');
+          }
+      };
+  
+      /* Bitwise Encoding
+      ** takes stringified and key
+      ** returns XOR
+      */
+      vernam = function(msg, key) {
+        var l = key.length;
+        var fromCharCode = String.fromCharCode;
+        return msg.replace(/[\s\S]/g, function(c, i) {
+          return fromCharCode(key.charCodeAt(i % l) ^ c.charCodeAt(0));
+        });
+      };
+  
+      /* XHR promises
+      */
+  
+      post = function(method, url, payload) {
+          return new Promise(function (resolve, reject) {
+              var xhr = new XMLHttpRequest();
+              xhr.open(method, url, true);
+              xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhr.onload = resolve;
+              xhr.onerror = reject;
+              xhr.send(payload);
+          });
+      };
+      request = function(method, url) {
+          return new Promise(function (resolve, reject) {
+              var xhr = new XMLHttpRequest();
+              xhr.open(method, url);
+              xhr.onload = resolve;
+              xhr.onerror = reject;
+              xhr.send();
+          });
+      };
+  
+      var Project = function(){}
+      /* Render a dropdown using MPSelect
+      ** Needs rewrite can't modify after initialization
+      */
+      Project.prototype.renderDropdown = function() {
+            $('.dropdown-menu').empty()
+            for ( var i = this.specs.length - 1; i >= 0; i--) {
+              var created
+              created = this['specs'][i]['created_at'] || "Work In Progress"
+              var htmlStr = "<li><span id='spec' data-id='" + i + "'>" + created +"</span></li>"
+              $(".dropdown-menu").last().append(htmlStr)
+  
+            }
+      }
+  
+      /*
+      ** Get a projects spec from our glorious backend
+      */
+      Project.prototype.getSpecs = function(){
+        var id = vernam(this.apiKey, this.apiSecret);
+        var url = 'https://spec-api.herokuapp.com/specs/read?key=' + md5(id);
+        return request('GET', url)
+      };
+  
+      Project.prototype.render = function(){
+      };
+  
+      Project.prototype.checkSpec = function(spec){
+        $.each(spec, function(index, eventInfo) {
+          currentEvent = eventInfo
+          eventName = currentEvent.event;
+          eventProps = currentEvent.$properties;
+          checker(eventName, eventProps);
+        });
+      };
+  
+      /*
+      ** Post a spec to our glorious backend
+      */
+  
+      Project.prototype.postSpec = function (spec){
+        var cypher = vernam(JSON.stringify(spec), this.apiKey);
+        var id = vernam(this.apiKey, this.apiSecret);
+        var url = 'http://spec-api.herokuapp.com/specs/create'
+        var payload = 'key=' + md5(id) + '&spec=' + btoa(cypher);
+        return post('POST', url, payload)
+      };
+  
+      Project.prototype.specWrite = function (SpecObj){
+        $('#accordion').empty()
+        var spec = SpecObj.spec
+        for (var i = 0, n = spec.length; i < n; i++) {
+            var eventName = spec[i]["event"];
+            var cssSafeEvent = this.cssSafe(eventName)
+            var eventTrigger = spec[i]["trigger"];
+            $("#accordion").append(
+              [
+                "<div class='panel panel-default'>",
+                "<div class='panel-heading' id='" + cssSafeEvent + "'>",
+                "<span class='accordion' href='#" + cssSafeEvent + "'>" + eventName + "</span>",
+                "<div class='event-trigger'>"+eventTrigger+"</div>",
+                "</div>",
+                "<div id='" + cssSafeEvent  +"' class='properties'>",
+                "<div class='panel-body'>",
+                "</div>",
+                "</div>",
+                "</div>"
+              ].join(''));
+  
+            var properties = spec[i]['$properties'];
+            for(var j = properties.length - 1; j >= 0; j--){
+              var property = properties[j];
+              var propName = property["name"];
+              var propType = property["type"] || ''
+              propType = propType.toLowerCase();
+              var cssSafeName = this.cssSafe(propName)
+              var propDefinition = property["definition"];
+              $(".panel-body").last().append([
+                "<div class='property'>",
+                "<div class='property-name' id='" + cssSafeEvent + "-" + cssSafeName + "'>" + propName + "</div>",
+                "<div class='property-type icon " + propType + "'></div>",
+                "<div class='property-definition'>" + propDefinition + "</div>",
+                "</div>"
+                ].join(''));
+              $('.main').last().append([
+                propName,
+              ])
+            };
+          };
+          $('#accordion').sortable()
+          this.checkSpec(spec)
+      }
+  
+      Project.prototype.cssSafe = function(string){
+        return string.replace('$','').replace(' ','_');
+      }
+  
+      Project.prototype.csvImport = function(file){
+        var header,
+            csvArray;
+        var eventIndex = -1;
+        var events = [];
+        var superProps = [];
+        var data = $.csv.toArrays(file);
+        header = data[0];
+        if (data && data.length > 0) {
+          csvArray = data.slice(1, data.length);
+          _.each(csvArray, function(arr){
+            var property = arr[header.indexOf('Property')];
+            var eventName = arr[header.indexOf('Event')];
+            var eventTrigger = arr[header.indexOf('Event Trigger')]
+            var superProperty = arr[header.indexOf('Super Property')];
+            var propertyType = arr[header.indexOf('Property Type')];
+            var superPropType = arr[header.indexOf('Super Property Type')];
+            var propertyDef = arr[header.indexOf('Property Definition')];
+            var superPropDef = arr[header.indexOf('Super Property Definition')];
+  
+            if (eventName){
+              eventIndex++;
+              events.push({ event: eventName, trigger: eventTrigger, $properties: [] });
+            }
+  
+            if (property) {
+              propObj = {name: property, type: propertyType, definition: propertyDef};
+              events[eventIndex]['$properties'].push(propObj);
+            }
+  
+            if (superProperty) {
+              superPropObj = {name: superProperty, type: superPropType, definition: superPropDef};
+              superProps.push(superPropObj);
+            }
+            // console.log(arr)
+          });
+          _.each(events, function(event){
+            event.$properties = new Set(event.$properties.concat(superProps));
+            event.$properties = Array.from(event['$properties']);
+          });
+          return {spec: {spec: events}};
+        } else {
+          /* alert('No data to import!'); */
+        }
+      }
+      /* Import File
+      ** Takes an event
+      ** Returns promise
+      */
+      Project.prototype.importSpec = function (evt) {
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+          var file = evt.target.files[0];
+          var reader = new FileReader();
+          var deferred = $.Deferred();
+          reader.readAsText(file);
+  
+          reader.onload = function(event) {
+            deferred.resolve(event.target.result);
+          };
+          reader.onerror = function() {
+            deferred.reject(this);
+          };
+        } else {
+          alert('The File APIs are not fully supported in this browser!');
+        }
+        return deferred.promise();
+      }
+  
+      /* Exports spec to csv
+      ** Takes JSON Spec
+      ** Returns CSV
+      */
+      Project.prototype.exportSpec = function (specObj) {
+        var data = specObj.spec.spec
+        var CSV = 'Event,Event Trigger,Property,Property Type,Property Definition,Super Property,Super Property Type,Super Property Definition\r\n'
+  
+        //Create list of profiles
+        var event_list = [];
+        for (var i = 0, n = data.length; i < n; i++){
+          var eventObj = data[i];
+          var eventName = eventObj.event
+          var eventTrigger = eventObj.trigger
+          var properties = eventObj.$properties
+          for (var propIdx = 0, m = properties.length; propIdx < m; propIdx++){
+            var prop = properties[propIdx] || ''
+            var propName = prop.name || ''
+            var propType = prop.type || ''
+            var propDef = prop.definition || ''
+            if (propName == '') {
+              debugger
+            }
+            var eventSection = [eventName, eventTrigger, propName, propType, propDef + '\r\n'].join(',')
+            eventName = ''
+            eventTrigger = ''
+            CSV += eventSection
+          }
+        }
+  
+        //Write the data
+        //Generate a file name
+        var fileName = specObj.created_at
+  
+        //Initialize file format you want csv or xls
+        var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+  
+        // Now the little tricky part.
+        // you can use either>> window.open(uri);
+        // but this will not work in some browsers
+        // or you will not get the correct file extension
+  
+        //this trick will generate a temp <a /> tag
+        var link = document.createElement("a");
+        link.href = uri;
+  
+        //set the visibility hidden so it will not effect on your web-layout
+        link.style = "visibility:hidden";
+        link.download = fileName + ".csv";
+  
+        //this part will append the anchor tag and remove it after automatic click
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+  
+      /*
+      ** Validates a blob as a valid spec
+      */
+      Project.prototype.validateSpec = function(blob){
+        // http://www.jsdvalidator.com/Validator
+        // for validating against expected schema
+        var jsd_schema = {Type:"Object",Attributes:[{Name:"spec",Type:"Array",Values:[{Type:"Object",Attributes:[{Name:"event",Type:"String"},{Name:"trigger",Type:"String"},{Name:"$properties",Type:"Array",Values:[{Type:"Object",Attributes:[{Name:"name",Type:"String"},{Name:"type",Type:"String"},{Name:"definition",Type:"String"}]}]}]}]}]};
+  
+        var jsd_validator = new JSDValidator({Schema : jsd_schema});
+        var spec;
+  
+        try {
+          spec = JSON.parse(vernam(atob(blob), MP.api.apiKey));
+        } catch (e){
+          console.log('Spec not encoded');
+        }
+        if (jsd_validator.Validate(spec)) {
+          return spec
+        }
+      }
+  
+      checker = function(name, properties) {
+        var endpoint = 'api/2.0/events/properties/toptypes'
+        MP.api.query(endpoint, {event:name, limit: 255} ).done(function(results){
+          var cssSafe = name.replace('$','').replace(' ','_')
+          var eventState = true;
+          var propertiesState = true;
+          if ($.isEmptyObject(results)) {
+            eventState = false
+          }
+          propNamesExist = results;
+          // yellow prop but no type
+          // red no prop
+          // green both prop and type
+          $.each(properties, function(index, Prop) {
+            var cssSafeProp = Prop.name.replace('$','').replace(' ','_')
+            var id = cssSafe + "-" + cssSafeProp
+  
+            console.log(id);
+            var $prop = $(document.getElementById(id))
+            if (propNamesExist[Prop.name]) {
+              var propType = propNamesExist[Prop.name].type
+              if ($prop.next().hasClass(propType)) {
+                $prop.prepend("<i class='fa fa-check' style='color: green;'></i>");
+              } else {
+                $prop.prepend("<i class='fa fa-warning' style='color: orange;'></i>");
+                propertiesState = false;
+              }
+            } else {
+              $prop.prepend("<i class='fa fa-ban' style='color: red;'></i>");
+              propertiesState = false;
+            }
+          })
+  
+          if (eventState && propertiesState) {
+            $(document.getElementById(cssSafe)).prepend("<i class='fa fa-check' style='color: green;'></i>");
+          } else if (eventState && !propertiesState) {
+            $(document.getElementById(cssSafe)).prepend("<i class='fa fa-warning' style='color: orange;'></i>");
+          } else {
+            $(document.getElementById(cssSafe)).prepend("<i class='fa fa-ban' style='color: red;'></i>");
+          }
+        })
+      };
+  
+  
+      $('#run').on('click', function(e){
+        Specs.specWrite(MP.$('#specs-list').MPSelect('value'));
+      });
+  
+      Specs = window.Specs = new Project()
+      MP.api.on('mpplatform.credentialsRegistered', function(){
+        Specs.apiKey = MP.api.apiKey
+        Specs.apiSecret = MP.api.apiSecret
+        Specs.specs = []
+        Specs.getSpecs()
+        .then(function(e) {
+          console.log(e);
+          console.log(e.target.response);
+          var tmpSpecs = JSON.parse(e.target.response)['spec'];
+          for ( var i = tmpSpecs.length - 1; i >= 0; i--) {
+            var blob = tmpSpecs[i]['spec']
+            var spec = Specs.validateSpec(blob)
+            tmpSpecs[i]['spec'] = spec
+            if (spec) { Specs.specs.push(tmpSpecs[i]) }
+          }
+          Specs.renderDropdown()
+        }, function(e) {
+          console.log(e);
+          console.log('Error');
+        })
+      })
+  
+      if (getQueryParam('api_key')) { MP.api.trigger('mpplatform.credentialsRegistered');}
+      MP.api.MAX_SIMULTANEOUS_QUERIES = 10
+      /*
+      Specs.postSpec('blah')
+      .then(function(e) {
+        console.log(e.target.response);
+      }, function(e) {
+        console.log(e);
+        console.log('Error');
+      })
+      */
+  
+      document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value.split("\\")[this.value.split("\\").length - 1];
+      };
+  
+  
+      // The event listener for the file upload
+      $('.dropdown').on('click', '#spec', function(e) {
+        Specs.specWrite(Specs.specs[e.target.getAttribute('data-id')]['spec'])
+      });
+      
+      document.addEventListener("click", "#spec", function(e){
+      });
+      
+      document.getElementById('uploadBtn').addEventListener('change', function(evt){
+        Specs.importSpec(event).then(
+          function (spec) {
+            Specs.specs.push(Specs.csvImport(spec))
+            Specs.renderDropdown()
+            $('#fileModal').modal('toggle')
+          })
+      }
+      , false);
+    
+      // Event listener for new accordion in jQuery
+      $("body").on("click",".panel-heading", function(){
+        $(this).siblings(".properties").slideToggle();
+      });
     </script>
   </body>
 </html>
